@@ -18,7 +18,8 @@ public class AutorService {
     }
 
     public List<Autor> findAll() {
-        return null;
+      List<Autor> autores=  autorRepository.findAll();
+        return autores;
     }
 
     public void save(Autor autor) {
