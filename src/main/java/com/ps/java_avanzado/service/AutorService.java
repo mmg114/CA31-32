@@ -14,7 +14,7 @@ public class AutorService {
     private  AutorRepository autorRepository;
 
     public Autor findById(Long id) {
-        return null;
+        return autorRepository.findById(id).get();
     }
 
     public List<Autor> findAll() {
@@ -22,16 +22,19 @@ public class AutorService {
         return autores;
     }
 
-    public void save(Autor autor) {
-
+    public Autor save(Autor autor) {
+        return autorRepository.save(autor);
     }
 
-    public void update(Autor autor) {
-
+    public Autor update(Autor autor) {
+        return autorRepository.save(autor);
     }
 
-    public void delete(Autor autor) {
-
+    public void delete(Long id) {
+        var autor= findById(id);
+        if(autor!=null) {
+            autorRepository.delete(autor);
+        }
     }
 
 

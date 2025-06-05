@@ -4,10 +4,8 @@ package com.ps.java_avanzado.controller;
 import com.ps.java_avanzado.model.Autor;
 import com.ps.java_avanzado.service.AutorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,24 +16,30 @@ public class AutorController {
 
     private final AutorService autorService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Autor> getAutores(){
         List<Autor> autores =autorService.findAll();
         return autores;
     }
 
+    @GetMapping("/{id}")
+    public Autor getAutoresById(@PathVariable Long id) {
+        Autor autores =autorService.findById(id);
+        return autores;
+    }
+
     @PostMapping
-    public String saveAutores(){
-        return "Mauricio";
+    public Autor saveAutores(@RequestBody Autor autor) {
+        return autorService.save(autor);
     }
 
     @PutMapping
-    public String updateAutores(){
-        return "estaban";
+    public Autor updateAutores(@RequestBody Autor autor){
+        return autorService.update(autor);
     }
 
-    @DeleteMapping
-    public String deleteAutor(){
-        return "Mauricio";
+    @DeleteMapping("/{id}")
+    public void deleteAutor(@PathVariable Long id) {
+         autorService.delete(id);
     }
 }

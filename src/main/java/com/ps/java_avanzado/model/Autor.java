@@ -10,7 +10,7 @@ import lombok.Data;
 public class Autor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //TODO
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "autor_id")
     private Long id;
 
