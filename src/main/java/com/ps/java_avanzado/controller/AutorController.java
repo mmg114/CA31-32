@@ -4,6 +4,7 @@ package com.ps.java_avanzado.controller;
 import com.ps.java_avanzado.model.Autor;
 import com.ps.java_avanzado.service.AutorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +24,22 @@ public class AutorController {
     }
     //GET localhost:8080/autor/id
     @GetMapping("/{id}")
-    public Autor getAutoresById(@PathVariable Long id) {
-        Autor autores =autorService.findById(id);
-        return autores;
+    public ResponseEntity<Autor> getAutoresById(@PathVariable Long id) {
+        Autor autores =autorService.findById(id).get();
+        return ResponseEntity.ok(autores);
     }
     //POST localhost:8080/autor
     // ->  body del mensaje deben poner un json con la informacion que quiere guardar
     // QUE INFORMACION La del autor SIN El ID
     @PostMapping
-    public Autor saveAutores(@RequestBody Autor autor) {
-        return autorService.save(autor);
+    public ResponseEntity<?> saveAutores(@RequestBody Autor autor) {
+
+        try{
+            return ResponseEntity.ok(autorService.save(autor));
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
     //PUT localhost:8080/autor
     // ->  body del mensaje deben poner un json con la informacion que quiere guardar

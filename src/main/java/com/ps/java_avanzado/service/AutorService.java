@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -13,8 +14,8 @@ public class AutorService {
 
     private  AutorRepository autorRepository;
 
-    public Autor findById(Long id) {
-        return autorRepository.findById(id).get();
+    public Optional<Autor> findById(Long id) {
+        return autorRepository.findById(id);
     }
 
     public List<Autor> findAll() {
@@ -22,7 +23,14 @@ public class AutorService {
         return autores;
     }
 
-    public Autor save(Autor autor) {
+    public Autor save(Autor autor) throws RuntimeException {
+
+        if(autor.getNombre()==null ){
+            throw  new RuntimeException("Debes enviar el nombre del Autor");
+        }
+        if(autor.getNacionalidad()==null ){
+            throw  new RuntimeException("Debes enviar la Nacionalidad del Autor");
+        }
         return autorRepository.save(autor);
     }
 
@@ -31,7 +39,7 @@ public class AutorService {
     }
 
     public void delete(Long id) {
-        var autor= findById(id);
+        var autor= findById(id).get();
         if(autor!=null) {
             autorRepository.delete(autor);
         }
